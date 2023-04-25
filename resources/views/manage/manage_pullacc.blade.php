@@ -138,7 +138,8 @@
                         <p class="mb-0">
                             <div class="table-responsive">
                                 
-                                <table id="example" class="table table-hover table-sm table-light dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                {{-- <table id="example" class="table table-hover table-sm table-light dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;"> --}}
+                                    <table class="align-middle mb-0 table table-borderless table-striped table-hover" id="example">
                                     <thead>
                                         <tr>
                                           
@@ -150,10 +151,10 @@
                                             <th class="text-center">ptname</th>
                                             <th class="text-center">vstdate</th>  
                                             <th class="text-center">pttype</th>
-                                            <th class="text-center" width="8%">pttypename</th>  
-                                            <th class="text-center" width="7%">ptsubtype</th>
-                                            <th class="text-center">pttype_eclaim_id</th>
-                                            <th class="text-center">pttype_eclaim_name</th>
+                                            {{-- <th class="text-center" width="8%">pttypename</th>   --}}
+                                            {{-- <th class="text-center" width="7%">ptsubtype</th> --}}
+                                            {{-- <th class="text-center">pttype_eclaim_id</th> --}}
+                                            {{-- <th class="text-center">pttype_eclaim_name</th> --}}
                                             <th class="text-center" width="10%">acc_code</th> 
                                             <th class="text-center">account_code</th>
                                             <th class="text-center">account_name</th>
@@ -179,10 +180,10 @@
                                                 <td class="p-2" width="10%">{{ $item->ptname }}</td> 
                                                 <td class="text-center" width="5%">{{ $item->vstdate }}</td>   
                                                 <td class="text-center" style="color:rgb(73, 147, 231)" width="5%">{{ $item->pttype }}</td> 
-                                                <td class="p-2" width="10%">{{ $item->pttypename }}</td>  
-                                                <td class="p-2">{{ $item->ptsubtype }}</td> 
-                                                <td class="text-center">{{ $item->pttype_eclaim_id }}</td> 
-                                                <td class="p-2">{{ $item->pttype_eclaim_name }}</td>  
+                                                {{-- <td class="p-2" width="10%">{{ $item->pttypename }}</td>   --}}
+                                                {{-- <td class="p-2">{{ $item->ptsubtype }}</td>  --}}
+                                                {{-- <td class="text-center">{{ $item->pttype_eclaim_id }}</td>  --}}
+                                                {{-- <td class="p-2">{{ $item->pttype_eclaim_name }}</td>   --}}
                                                 <td class="text-center">{{ $item->acc_code }}</td> 
                                                 <td class="text-center">{{ $item->account_code }}</td> 
                                                 <td class="text-center">{{ $item->account_name }}</td> 

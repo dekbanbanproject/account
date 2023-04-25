@@ -43,4 +43,6 @@ Route::middleware(['type'])->group(function(){
     Route::match(['get','post'],'manage_pullaccsave',[App\Http\Controllers\ManagerController::class, 'manage_pullaccsave'])->name('manage.manage_pullaccsave');// manage
     Route::match(['get','post'],'manage_heck_sit',[App\Http\Controllers\ManagerController::class, 'manage_heck_sit'])->name('manage.manage_heck_sit');// manage
 
+    Route::match(['get','post'],'manage_setting',[App\Http\Controllers\ManagerController::class, 'manage_setting'])->name('manage.manage_setting');// manage
+
 });

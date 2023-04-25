@@ -82,5 +82,23 @@ class ManagerController extends Controller
             'acc_debtor'   => $acc_debtor ,
         ]);
     }
+    public function manage_setting(Request $request)
+    { 
+        $startdate = $request->startdate;
+        $enddate = $request->enddate; 
+        $data = DB::connection('mysql_hos')->select('
+                SELECT pt.pttype,pt.name as namept,pt.hipdata_code,e.code,e.name as pttype_eclaim_name
+                ,e.ar_opd,e.ar_ipd
+                from pttype pt
+                left join pttype_eclaim e on e.code=pt.pttype_eclaim_id 
+                  
+            ');
+         
+        return view('manage.manage_setting', [
+            'data'         => $data,
+            'startdate'    => $startdate,
+            'enddate'      => $enddate ,
+        ]);
+    }
     
 }

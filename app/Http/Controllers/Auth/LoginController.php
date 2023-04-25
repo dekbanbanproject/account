@@ -52,7 +52,7 @@ class LoginController extends Controller
             } elseif(auth()->user()->type == 'STAFF') {
                 return redirect()->route('staff.home');
             } elseif(auth()->user()->type == 'MANAGE') {
-                return redirect()->route('manage.index_manage');     
+                return redirect()->route('manage.manage_dashboard');     
             } elseif(auth()->user()->type == 'USER') {
                 return redirect()->route('user.index_user');  
             } elseif(auth()->user()->type == 'RPST') {

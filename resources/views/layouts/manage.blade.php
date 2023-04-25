@@ -192,14 +192,27 @@
                         </li>  --}}
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect">  
-                                <i class="fa-solid fa-wheelchair text-danger"></i>
+                                <i class="fa-regular fa-credit-card text-danger"></i>
                                 <span style="color: white">ลูกหนี้</span>
                             </a>
                             <ul class="sub-menu" aria-expanded="true">
                                 <li ><a href="{{ url('manage_pullacc') }}" style="color: white">ดึงลูกหนี้</a></li> 
                                 {{-- <li ><a href="{{ url('check_kradook') }}" style="color: white">แผ่นโลหะกระดูก</a></li>   --}}
-                                {{-- <li ><a href="{{ url('check_khosaphok') }}" style="color: white">ข้อสะโพก</a></li>  --}}
+                                {{-- <li ><a href="{{ url('check_khosaphok') }}" style="color: white">ข้อสะโพก</a></li>  --}} 
                             </ul>
+                        </li> 
+                        <li> 
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">   
+                                <i class="fa-solid fa-gears text-danger me-2"></i>
+                                <span style="color: white">ตั่งค่า</span>
+                            </a>
+                            <ul class="sub-menu" aria-expanded="true">  
+                                <li ><a href="{{ url('manage_setting') }}" style="color: white">กำหนดสิทธิ์ที่ต้องการดึง</a></li>
+                            </ul>
+                           
+                               
+                                
+                           
                         </li> 
                         
                     </ul>
