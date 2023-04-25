@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ManagerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,13 +16,31 @@ use App\Http\Controllers\AdminController;
 |
 */
 
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 Route::get('/', function () {
-    return view('welcome');
-});
+    if (Auth::check()) {
+      return view('welcome');
+    }else{
+        return view('auth.login');
+    } 
+  })->name('wel.index');
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('type');
 
-Route::match(['get','post'],'index_admin',[App\Http\Controllers\AdminController::class, 'index_admin'])->name('admin.index_admin');// admin 
-Route::match(['get','post'],'index_user',[App\Http\Controllers\AdminController::class, 'index_user'])->name('user.home');// user 
+Route::match(['get','post'],'index_admin',[App\Http\Controllers\AdminController::class, 'index_admin'])->name('admin.index_admin')->middleware('type');// admin 
+Route::match(['get','post'],'index_user',[App\Http\Controllers\AdminController::class, 'index_user'])->name('user.index_user')->middleware('type');// user 
+ 
+Route::middleware(['type'])->group(function(){ 
+
+    Route::match(['get','post'],'manage_dashboard',[App\Http\Controllers\ManagerController::class, 'manage_dashboard'])->name('manage.manage_dashboard');// manage
+    Route::match(['get','post'],'index_manage',[App\Http\Controllers\ManagerController::class, 'index_manage'])->name('manage.index_manage');// manage
+
+    Route::match(['get','post'],'manage_pullacc',[App\Http\Controllers\ManagerController::class, 'manage_pullacc'])->name('manage.manage_pullacc');// manage
+    Route::match(['get','post'],'manage_pullaccsave',[App\Http\Controllers\ManagerController::class, 'manage_pullaccsave'])->name('manage.manage_pullaccsave');// manage
+    Route::match(['get','post'],'manage_heck_sit',[App\Http\Controllers\ManagerController::class, 'manage_heck_sit'])->name('manage.manage_heck_sit');// manage
+
+});
