@@ -129,9 +129,9 @@
                         </button>
                         <div class="dropdown-menu dropdown-menu-end">
                             <!-- item-->
-                            <a class="dropdown-item" href="{{ url('profile_edit/' . Auth::user()->id) }}"><i
+                            {{-- <a class="dropdown-item" href="{{ url('profile_edit/' . Auth::user()->id) }}"><i
                                     class="ri-user-line align-middle me-1"></i> Profile</a>
-                            <div class="dropdown-divider"></div>
+                            <div class="dropdown-divider"></div> --}}
                             <a class="dropdown-item text-danger" href="{{ route('logout') }}"
                                 class="text-reset notification-item"
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i
