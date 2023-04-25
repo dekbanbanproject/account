@@ -68,16 +68,16 @@
                     <div class="navbar-brand-box">
                         <a href="" class="logo logo-dark">
                             <span class="logo-sm">
-                                <img src="dis/images/logo-sm.png" alt="logo-sm" height="22">
+                                <img src="distemplate/images/dataaudit.jpg" alt="logo-sm" height="22">
                             </span>
                             <span class="logo-lg">
-                                <img src="dis/images/logo-dark.png" alt="logo-dark" height="20">
+                                <img src="distemplate/images/dataaudit.jpg" alt="logo-dark" height="20">
                             </span>
                         </a>
 
                         <a href="" class="logo logo-light">
                             <span class="logo-sm"> 
-                                <img src="{{ asset('dis/images/logo150.png') }}" alt="logo-sm-light" height="40">
+                                <img src="{{ asset('distemplate/images/dataaudit.jpg') }}" alt="logo-sm-light" height="40">
                             </span>
                             <span class="logo-lg">
                                 <h4 style="color:rgb(41, 41, 41)" class="mt-4">DTAD-ACCOUNT</h4> 
@@ -112,8 +112,37 @@
                             <i class="ri-fullscreen-line" style="color: rgb(54, 53, 53)"></i>
                         </button>
                     </div>
- 
- 
+                    <div class="dropdown d-inline-block user-dropdown">
+                        <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            @if (Auth::user()->img == null)
+                                <img src="{{ asset('assets/images/default-image.jpg') }}" height="32px"
+                                    width="32px" alt="Header Avatar" class="rounded-circle header-profile-user">
+                            @else
+                                <img src="{{ asset('storage/person/' . Auth::user()->img) }}" height="32px"
+                                    width="32px" alt="Header Avatar" class="rounded-circle header-profile-user">
+                            @endif
+                            <span class="d-none d-xl-inline-block ms-1">
+                                {{ Auth::user()->fname }} {{ Auth::user()->lname }}
+                            </span>
+                            <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <!-- item-->
+                            <a class="dropdown-item" href="{{ url('profile_edit/' . Auth::user()->id) }}"><i
+                                    class="ri-user-line align-middle me-1"></i> Profile</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-danger" href="{{ route('logout') }}"
+                                class="text-reset notification-item"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i
+                                    class="ri-shut-down-line align-middle me-1 text-danger"></i>
+                                Logout
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </header>
