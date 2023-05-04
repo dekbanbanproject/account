@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\User; 
+use Illuminate\Http\Request; 
 use Illuminate\Support\Facades\DB;
-
 use PDF;
 use setasign\Fpdi\Fpdi;
 use App\Models\Budget_year;
@@ -20,6 +18,9 @@ use Http;
 use SoapClient; 
 use Arr; 
 use GuzzleHttp\Client;
+use App\Models\User;
+use App\Models\Pttype;
+use App\Models\Pttype_eclaim;
 
 class ManagerController extends Controller
 {  
@@ -87,18 +88,58 @@ class ManagerController extends Controller
         $startdate = $request->startdate;
         $enddate = $request->enddate; 
         $data = DB::connection('mysql_hos')->select('
-                SELECT pt.pttype,pt.name as namept,pt.hipdata_code,e.code,e.name as pttype_eclaim_name
+                SELECT pt.pttype,pt.name as namept,pt.hipdata_code,e.code,e.name as pttype_eclaim_name,pt.pttype_eclaim_id 
                 ,e.ar_opd,e.ar_ipd
                 from pttype pt
-                left join pttype_eclaim e on e.code=pt.pttype_eclaim_id 
-                  
-            ');
-         
+                left join pttype_eclaim e on e.code=pt.pttype_eclaim_id                   
+        ');
+        $aropd = Pttype_eclaim::where('pttype_eclaim.ar_opd','<>',NULL)->groupBy('pttype_eclaim.ar_opd')->get();
+        $aripd = Pttype_eclaim::where('pttype_eclaim.ar_ipd','<>',NULL)->groupBy('pttype_eclaim.ar_ipd')->get();
         return view('manage.manage_setting', [
             'data'         => $data,
             'startdate'    => $startdate,
             'enddate'      => $enddate ,
+            'aropd'        => $aropd ,
+            'aripd'        => $aripd ,
         ]);
     }
+    public function manage_setting_edit(Request $request,$pttype)
+    {
+        $type = Pttype::find($pttype);
+        // $query= DB::table('data_amphur')
+        //   ->join('data_tumbon','data_amphur.ID','=','data_tumbon.AMPHUR_ID')
+        //   ->select('data_tumbon.TUMBON_NAME','data_tumbon.ID')
+        //   ->where('data_amphur.ID',$id)
+        //   ->groupBy('data_tumbon.TUMBON_NAME','data_tumbon.ID')
+        //   ->get();
+
+        // $type = Pttype::join('pttype_eclaim','pttype_eclaim.code','=','pttype.pttype_eclaim_id')
+        //         ->select('pttype.name','pttype.pttype','pttype_eclaim.code','pttype_eclaim.name','pttype_eclaim.ar_ipd','pttype_eclaim.ar_opd')
+        //         ->find($pttype);
+                // dd($type);      
+
+        return response()->json([
+            'status'     => '200',
+            'type'       =>  $type,
+        ]);
+    }
+    // public function manage_setting_update(Request $request)
+    // { 
+    //     $id = $request->input('editplan_kpi_id');
+    //     $maxid = Pttype_eclaim::max('code'); 
+    //     $code =  $maxid+1;
+
+    //     $update = Pttype_eclaim::find($id);
+    //     $update->plan_strategic_id = $request->input('editplan_strategic_id');
+    //     $update->plan_taget_id = $request->input('editplan_taget_id');
+    //     $update->plan_kpi_code = $request->input('editplan_kpi_code');
+    //     $update->plan_kpi_name = $request->input('editplan_kpi_name'); 
+    //     $update->plan_kpi_year = $request->input('editleave_year_id'); 
+    //     $update->save();
+
+    //     return response()->json([
+    //         'status'     => '200',
+    //     ]);
+    // }
     
 }

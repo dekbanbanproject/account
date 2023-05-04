@@ -44,5 +44,6 @@ Route::middleware(['type'])->group(function(){
     Route::match(['get','post'],'manage_heck_sit',[App\Http\Controllers\ManagerController::class, 'manage_heck_sit'])->name('manage.manage_heck_sit');// manage
 
     Route::match(['get','post'],'manage_setting',[App\Http\Controllers\ManagerController::class, 'manage_setting'])->name('manage.manage_setting');// manage
-
+    Route::match(['get','post'],'manage_setting_edit/{pttype}',[App\Http\Controllers\ManagerController::class, 'manage_setting_edit'])->name('manage.manage_setting_edit');// 
+    Route::match(['get','post'],'manage_setting_update',[App\Http\Controllers\ManagerController::class, 'manage_setting_update'])->name('manage.manage_setting_update');// manage
 });
