@@ -123,7 +123,7 @@
                                     width="32px" alt="Header Avatar" class="rounded-circle header-profile-user">
                             @endif
                             <span class="d-none d-xl-inline-block ms-1">
-                                {{ Auth::user()->fname }} {{ Auth::user()->lname }}
+                                {{ Auth::user()->fullname }} 
                             </span>
                             <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                         </button>
