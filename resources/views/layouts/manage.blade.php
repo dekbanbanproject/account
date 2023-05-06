@@ -335,20 +335,49 @@
             $('#example').DataTable();
             $('#example2').DataTable();
             $('#example3').DataTable();
-           
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
-            });
+            });       
 
         });
+ 
 
-        $(document).ready(function() {
-            
-        });
-
-       
+        function Addopd() {
+            var aopd = document.getElementById("ADDOPD").value;
+            var code_name = document.getElementById("CODE_NAME").value;
+         
+           
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                url: "{{url('add_opd_new')}}",
+                method: "GET",
+                data: {
+                    aopd: aopd,
+                    code_name:code_name,
+                    _token: _token
+                },
+                success: function (result) {
+                    $('.show_opd').html(result);
+                }
+            })
+        }
+        function addpangipd() {
+            var aipd = document.getElementById("ADDIPD").value; 
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+                url: "{{url('add_ipd_new')}}",
+                method: "GET",
+                data: {
+                    aipd: aipd,
+                    _token: _token
+                },
+                success: function (result) {
+                    $('.show_ipd').html(result);
+                }
+            })
+        }
     </script>
 
 </body>

@@ -46,4 +46,10 @@ Route::middleware(['type'])->group(function(){
     Route::match(['get','post'],'manage_setting',[App\Http\Controllers\ManagerController::class, 'manage_setting'])->name('manage.manage_setting');// manage
     Route::match(['get','post'],'manage_setting_edit/{pttype}',[App\Http\Controllers\ManagerController::class, 'manage_setting_edit'])->name('manage.manage_setting_edit');// 
     Route::match(['get','post'],'manage_setting_update',[App\Http\Controllers\ManagerController::class, 'manage_setting_update'])->name('manage.manage_setting_update');// manage
-});
+    Route::match(['get','post'],'manage_pull_pttype',[App\Http\Controllers\ManagerController::class, 'manage_pull_pttype'])->name('manage.manage_pull_pttype');// manage
+   
+    Route::match(['get','post'],'add_opd_new',[App\Http\Controllers\ManagerController::class, 'add_opd_new'])->name('manage.add_opd_new');// 
+    Route::match(['get','post'],'add_ipd_new',[App\Http\Controllers\ManagerController::class, 'add_ipd_new'])->name('manage.add_ipd_new');// 
+
+
+  });

@@ -21,6 +21,7 @@ use GuzzleHttp\Client;
 use App\Models\User;
 use App\Models\Pttype;
 use App\Models\Pttype_eclaim;
+use App\Models\Pttype_acc;
 
 class ManagerController extends Controller
 {  
@@ -88,10 +89,10 @@ class ManagerController extends Controller
         $startdate = $request->startdate;
         $enddate = $request->enddate; 
         $data = DB::connection('mysql_hos')->select('
-                SELECT pt.pttype,pt.name as namept,pt.hipdata_code,e.code,e.name as pttype_eclaim_name,pt.pttype_eclaim_id 
-                ,e.ar_opd,e.ar_ipd
-                from pttype pt
-                left join pttype_eclaim e on e.code=pt.pttype_eclaim_id                   
+                SELECT pt.pttype_acc_code,e.code,e.name as pttype_eclaim_name,pt.pttype_acc_eclaimid,pt.pttype_acc_name
+                ,e.ar_opd,e.ar_ipd,pt.pttype_acc_id
+                from pttype_acc pt
+                left join pttype_eclaim e on e.code=pt.pttype_acc_eclaimid                   
         ');
         $aropd = Pttype_eclaim::where('pttype_eclaim.ar_opd','<>',NULL)->groupBy('pttype_eclaim.ar_opd')->get();
         $aripd = Pttype_eclaim::where('pttype_eclaim.ar_ipd','<>',NULL)->groupBy('pttype_eclaim.ar_ipd')->get();
@@ -103,16 +104,17 @@ class ManagerController extends Controller
             'aripd'        => $aripd ,
         ]);
     }
-    public function manage_setting_edit(Request $request,$pttype)
+    public function manage_setting_edit(Request $request,$id)
     {
-        $type = Pttype::find($pttype);
+        $type = Pttype_acc::find($id);
         // $query= DB::table('data_amphur')
         //   ->join('data_tumbon','data_amphur.ID','=','data_tumbon.AMPHUR_ID')
         //   ->select('data_tumbon.TUMBON_NAME','data_tumbon.ID')
         //   ->where('data_amphur.ID',$id)
         //   ->groupBy('data_tumbon.TUMBON_NAME','data_tumbon.ID')
         //   ->get();
-
+        // $type_ = Pttype::where('pttype','=',$pt)->first();
+        // $type = $type_->pttype;
         // $type = Pttype::join('pttype_eclaim','pttype_eclaim.code','=','pttype.pttype_eclaim_id')
         //         ->select('pttype.name','pttype.pttype','pttype_eclaim.code','pttype_eclaim.name','pttype_eclaim.ar_ipd','pttype_eclaim.ar_opd')
         //         ->find($pttype);
@@ -122,6 +124,99 @@ class ManagerController extends Controller
             'status'     => '200',
             'type'       =>  $type,
         ]);
+    }
+
+    public function manage_setting_update(Request $request)
+    {
+        // $maxid = Pttype_eclaim::max('code'); 
+        // $code_max =  $maxid+1;
+        // $add = new Pttype_eclaim(); 
+        // $add->code = $code_max;
+        // $add->ar_opd = $request->input('ar_opd');
+        // $add->ar_ipd = $request->input('ar_ipd');
+        // $add->name = $request->input('code_name');
+        // $add->save();
+        $accid = $request->input('acc_id');
+        $code = $request->input('ar_opd');         
+        // $codei = $request->input('ar_ipd');
+        // if ($codeo =='') {
+        //     $code = '';
+        // } else {
+        //     $code = $codei;
+        // }        
+
+        $update = pttype_acc::find($accid);
+        $update->pttype_acc_eclaimid = $code;
+        $update->save();
+
+        return response()->json([
+            'status'     => '200', 
+        ]);
+    }
+    public function manage_pull_pttype(Request $request)
+    {
+        $data_ = Pttype::get();
+        Pttype_acc::truncate();
+        foreach ($data_ as $key => $value) {
+            // $check = Pttype_acc::where('pttype_acc_code','=',$value->pttype)->count();
+            // if ($check > 0) {
+            //     Pttype_acc::where('pttype_acc_code', $value->pttype)
+            //         ->update([
+            //             'pttype_acc_code'         => $value->pttype, 
+            //             'pttype_acc_name'         => $value->name,
+            //             'pttype_acc_eclaimid'     => $value->pttype_eclaim_id, 
+            //             'pttype_acc_nhsoadpcode'  => $value->nhso_code
+            //         ]);
+            // } else {
+              
+
+                $date = date('Y-m-d');
+                // Pttype_acc::insert([
+                //     'pttype_acc_code'         => $value->pttype, 
+                //     'pttype_acc_name'         => $value->name,
+                //     'pttype_acc_eclaimid'     => $value->pttype_eclaim_id, 
+                //     'pttype_acc_nhsoadpcode'  => $value->nhso_code,
+                //     'created_at'              => $date 
+                // ]);
+            // }  
+
+            $add = new Pttype_acc();
+            $add->pttype_acc_code =  $value->pttype;
+            $add->pttype_acc_name =  $value->name;
+            $add->pttype_acc_eclaimid =  $value->pttype_eclaim_id;
+            $add->pttype_acc_nhsoadpcode =  $value->nhso_code;
+            $add->created_at =  $date;
+            $add->save();
+        }         
+        return response()->json([
+            'status'     => '200', 
+        ]);
+    }
+    function add_opd_new(Request $request)
+    {     
+        if($request->aopd!= null || $request->aopd != ''){    
+            $count_check = Pttype_eclaim::where('ar_opd','=',$request->aopd)->count();           
+                if($count_check == 0){    
+                    $maxid = Pttype_eclaim::max('code'); 
+                    $code_max =  $maxid+1;
+
+                    $add = new Pttype_eclaim(); 
+                    $add->code = $code_max;
+                    $add->ar_opd = $request->aopd;
+                    $add->name = $request->code_name;
+                    $add->save(); 
+                }
+                }
+                    $query =  DB::connection('mysql_hos')->table('pttype_eclaim')->get();            
+                    $output='<option value="">--เลือก--</option>';                
+                    foreach ($query as $row){
+                        if($request->aopd == $row->ar_opd){
+                            $output.= '<option value="'.$row->code.'" selected>'.$row->ar_opd.'</option>';
+                        }else{
+                            $output.= '<option value="'.$row->code.'">'.$row->ar_opd.'</option>';
+                        }   
+                }    
+            echo $output;        
     }
     // public function manage_setting_update(Request $request)
     // { 

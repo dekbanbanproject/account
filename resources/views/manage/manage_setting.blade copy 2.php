@@ -105,8 +105,11 @@
                                           
                                             <th width="5%" class="text-center">ลำดับ</th>  
                                             <th class="text-center" width="5%">pttype</th> 
-                                            <th class="text-center">name</th> 
-                                            <th class="text-center">pttype_acc_name</th>  
+                                            <th class="text-center">name</th>
+                                            {{-- <th class="text-center" >hipdata_code</th> --}}
+                                            {{-- <th class="text-center" >pttype_eclaim_id</th> --}}
+                                            <th class="text-center">pttype_acc_name</th> 
+                                            {{-- <th class="text-center">ตั้งค่าผัง</th>  --}}
                                             <th class="text-center">ar_opd</th> 
                                             <th class="text-center">ar_ipd</th> 
                                         </tr>
@@ -117,24 +120,30 @@
                                             <tr id="tr_{{$item->pttype_acc_id}}">                                                  
                                                 <td class="text-center" width="5%">{{ $i++ }}</td>   
                                                 <td class="text-center" width="5%">{{ $item->pttype_acc_code }}</td> 
-                                                <td class="p-2">{{ $item->pttype_acc_name }}</td>  
+                                                <td class="p-2">{{ $item->pttype_acc_name }}</td> 
+                                                {{-- <td class="text-center" width="5%">{{ $item->hipdata_code }}</td>   --}}
+                                                {{-- <td class="text-center" width="5%">{{ $item->code }}</td>   --}}
                                                 <td class="p-2">{{ $item->pttype_eclaim_name }}</td> 
-                                              
-                                                <td class="p-2" width="20%">
+                                                {{-- <td class="p-2" width="10%">
                                                     @if ($item->pttype_acc_eclaimid == '')
-                                                    <button type="button" class="mb-2 me-2 btn-icon btn-shadow btn-dashed btn btn-outline-success insert_data" value="{{ $item->pttype_acc_id }}">                                                      
-                                                        <i class="fa-regular fa-square-plus me-2"></i>
-                                                        ตั้งค่าผังบัญชี
+                                                    <button type="button" class="mb-2 me-2 btn-icon btn-shadow btn-dashed btn btn-outline-success edit_data" value="{{ $item->pttype_acc_id }}">
+                                                      
+                                                        <i class="fa-regular fa-square-plus"></i>
                                                     </button>
-                                                    @else      
-                                                        <button type="button" class="mb-2 me-2 btn-icon btn-shadow btn-dashed btn btn-outline-warning edit_data" value="{{ $item->pttype_acc_id }}">
-                                                           
-                                                            <i class="fa-solid fa-pen-to-square me-2"></i>
-                                                            {{ $item->ar_opd }}
-                                                        </button> 
+                                                    @else                                                   
+                                                        <button type="button" class="mb-2 me-2 btn-icon btn-shadow btn-dashed btn btn-outline-warning insert_data"> 
+                                                                <i class="fa-solid fa-pen-to-square"></i> 
+                                                        </button>
                                                     @endif                                                      
-                                                </td> 
-                                               
+                                                </td>   --}}
+                                                <td class="p-2" width="20%">
+                                                    <button type="button" class="mb-2 me-2 btn-icon btn-shadow btn-dashed btn btn-outline-success edit_data" value="{{ $item->pttype_acc_id }}">
+                                                      
+                                                        <i class="fa-regular fa-square-plus me-2"></i>
+                                                        {{ $item->ar_opd }}
+                                                    </button>
+                                                  
+                                                </td>  
                                                 <td class="p-2" width="20%">{{ $item->ar_ipd }}</td>  
                                             </tr>
  
@@ -159,40 +168,22 @@
                     <h5 class="modal-title" id="invenModalLabel">กำหนดผังบัญชี</h5> 
                 </div>
                 <div class="modal-body"> 
-                    <input id="editpttype" name="pttype" type="hidden" class="form-control form-control-sm">
+                    <input id="editpttype" name="pttype" type="text" class="form-control form-control-sm">
                     <div class="row">    
-                        {{-- <div class="col-md-4">
-                        </div>                       --}}
                         <div class="col-md-4">
+                        </div>                      
+                        <div class="col-md-3">
                             <label for="">รหัสผังบัญชี (OPD)</label>
                             <div class="form-group"> 
                                 <select id="ar_opd" name="ar_opd" class="form-select form-select-lg show_opd" style="width: 100%">  
                                     <option value="">--เลือก--</option>
                                     @foreach ($aropd as $items)  
-                                        <option value="{{ $items->code }}"> {{ $items->ar_opd }} {{ $items->name }}</option> 
+                                        <option value="{{ $items->code }}"> {{ $items->ar_opd }} </option> 
                                     @endforeach    
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <label for="">ชื่อผังบัญชี</label>
-                            <div class="form-group">
-                                <input id="CODE_NAME" name="CODE_NAME" type="text" class="form-control form-control-sm">
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <label for="">ถ้าไม่มีให้เพิ่ม ***(รหัสผังบัญชี OPD)</label>
-                            <div class="form-group">
-                                <input id="ADDOPD" name="ADDOPD" type="text" class="form-control form-control-sm">                               
-                            </div>
-                        </div>
                         <div class="col-md-1">
-                            <br>
-                            <button type="button" class="btn-icon btn-shadow btn-dashed btn btn-outline-success" onclick="Addopd();">
-                                <i class="fa-regular fa-square-plus"></i>
-                            </button>
-                        </div> 
-                        {{-- <div class="col-md-1">
                         </div>
                         <div class="col-md-3">
                             <label for="">รหัสผังบัญชี (IPD)</label>
@@ -204,10 +195,10 @@
                                     @endforeach    
                                 </select>
                             </div>
-                        </div>  --}}
+                        </div> 
                                
                     </div>
-                    {{-- <div class="row">
+                    <div class="row">
                         <div class="col-md-4">
                             <label for="">ชื่อผังบัญชี</label>
                             <div class="form-group">
@@ -226,8 +217,18 @@
                                 <i class="fa-regular fa-square-plus"></i>
                             </button>
                         </div> 
-                    
-                    </div> --}}
+                        {{-- <div class="col-md-3">
+                            <label for="">ถ้าไม่มีให้เพิ่ม ***(รหัสผังบัญชี IPD)</label>
+                            <div class="form-group">
+                                <input id="ADDIPD" name="ADDIPD" type="text" class="form-control form-control-sm">                               
+                            </div>
+                        </div>
+                        <div class="col-md-1"> <br>
+                            <button type="button" onclick="addpangipd();" class="mb-2 me-2 mt-2 btn-icon btn-shadow btn-dashed btn btn-outline-success">
+                                <i class="fa-regular fa-square-plus"></i>
+                            </button>
+                        </div> --}}
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <div class="col-md-12 text-end">
@@ -279,7 +280,7 @@
             });
 
             $("#spinner-div").hide(); //Request is complete so hide spinner
-            $(document).on('click', '.insert_data', function() {
+            $(document).on('click', '.edit_data', function() {
                 var pt = $(this).val();
                 alert(pt);
                 $('#updteModal').modal('show');
