@@ -9,8 +9,8 @@ class Pttype extends Model
 {
     use HasFactory;
 
-    protected $connection = 'mysql_hos';
+    protected $connection = 'mysql3';
     protected $table = 'pttype';
     protected $primaryKey = 'pttype';
-    public $timestamps = false;     
+    public $timestamps = false;
 }

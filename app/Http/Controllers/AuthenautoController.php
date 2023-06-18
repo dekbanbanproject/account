@@ -205,7 +205,7 @@ class AuthenautoController extends Controller
                 left join pttype ptt on ptt.pttype=o.pttype
                 LEFT JOIN rcmdb.authencode ra ON ra.VN = o.vn
 
-                where o.vstdate between "2023-06-01" and "2023-06-01"
+                where o.vstdate between "2023-06-18" and "2023-06-18"
                 AND ServiceCode IS NULL
                 AND o.an IS NULL
                 group by o.vn
@@ -227,6 +227,38 @@ class AuthenautoController extends Controller
                 }
             }
         return view('authen.pullauthencode_auto',[
+            'data_hos'            =>   $data_hos_,
+
+        ]);
+    }
+
+    public function sendauthencode_auto(Request $request)
+    {
+        $ip = $request->ip();
+        // $authen = Http::post("http://localhost:8189/api/nhso-service/save-as-draft");
+        $cid = $request->person_id;
+        $tel = $request->mobile;
+        $claimType = $request->claimType;
+        $correlationId = $request->correlationId;
+        $hn = $request->hn;
+        $hcode = $request->hcode;
+
+        $authen = Http::post("http://localhost:8189/api/nhso-service/confirm-save",
+        [
+            'pid'              =>  $cid,
+            'claimType'        =>  $claimType,
+            'mobile'           =>  $tel,
+            'correlationId'    =>  $correlationId,
+            // 'hcode'            =>  $hcode,
+            'hn'               =>  $hn
+        ]);
+
+        Patient::where('cid', $cid)
+            ->update([
+                'hometel'         => $tel
+            ]);
+
+        return view('authen.sendauthencode_auto',[
             'data_hos'            =>   $data_hos_,
 
         ]);
