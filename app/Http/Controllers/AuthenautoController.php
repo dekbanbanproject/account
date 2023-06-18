@@ -194,6 +194,8 @@ class AuthenautoController extends Controller
 
     public function pullauthencode_auto(Request $request)
     {
+        $collection = Http::get('http://localhost:8189/api/smartcard/read?readImageFlag=true')->collect();
+        dd($collection);
         $data_hos_ = DB::connection('mysql3')->select('
                 SELECT o.vn,ifnull(o.an,"") as an,o.hn,showcid(pt.cid) as cid
                 ,concat(pt.pname,pt.fname," ",pt.lname) as ptname
@@ -248,10 +250,10 @@ class AuthenautoController extends Controller
 
                     @$pid = $result['pid'];
                     @$correlationId = $result['correlationId'];
-                    @$claimType = $result['claimTypes'];
+                    @$claimTypes = $result['claimTypes'];
 
                     $pid                = @$pid;
-                    $claimType          = @$claimType;
+                    $claimType          = @$claimTypes;
                     $correlationId      = @$correlationId;
                     $mobile             = $hometel;
 

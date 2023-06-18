@@ -23,6 +23,9 @@ return new class extends Migration
                 $table->string('vstdate')->nullable(); //
                 $table->string('ServiceCode')->nullable(); //
                 $table->string('ServiceType')->nullable(); //
+                $table->string('claimType')->nullable(); //
+                $table->string('correlationId')->nullable(); //
+                $table->string('mobile')->nullable(); //
                 $table->timestamps();
             });
         }
