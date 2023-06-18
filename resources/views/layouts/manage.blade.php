@@ -13,8 +13,8 @@
     <link rel="shortcut icon" href="{{ asset('dis/images/logo150.ico') }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  
-   
+
+
 
     {{-- <link href="{{ asset('pkclaim/libs/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css"> --}}
     <link href="{{ asset('dis/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}" rel="stylesheet">
@@ -46,22 +46,22 @@
 
 
 
-    <link href="{{ asset('css/fullcalendar.css') }}" rel="stylesheet"> 
+    <link href="{{ asset('css/fullcalendar.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('js/plugins/select2/css/select2.min.css')}}">
    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-   <link rel="stylesheet" href="{{ asset('dis/vendors/pixeden-stroke-7-icon-master/pe-icon-7-stroke/dist/pe-icon-7-stroke.css') }}"> 
+   <link rel="stylesheet" href="{{ asset('dis/vendors/pixeden-stroke-7-icon-master/pe-icon-7-stroke/dist/pe-icon-7-stroke.css') }}">
     <link href="distemplate/libs/dropzone/min/dropzone.min.css" rel="stylesheet" type="text/css" />
 </head>
-  
+
 
 <body data-topbar="dark">
- 
+
     <!-- Begin page -->
     <div id="layout-wrapper">
 
         <header id="page-topbar">
             <div class="navbar-header" style="background-color: rgb(252, 252, 252)">
-              
+
 
                 <div class="d-flex">
                     <!-- LOGO -->
@@ -76,11 +76,11 @@
                         </a>
 
                         <a href="" class="logo logo-light">
-                            <span class="logo-sm"> 
+                            <span class="logo-sm">
                                 <img src="{{ asset('distemplate/images/dataaudit.jpg') }}" alt="logo-sm-light" height="40">
                             </span>
                             <span class="logo-lg">
-                                <h4 style="color:rgb(41, 41, 41)" class="mt-4">DTAD-ACCOUNT</h4> 
+                                <h4 style="color:rgb(41, 41, 41)" class="mt-4">DTAD-ACCOUNT</h4>
                             </span>
                         </a>
                     </div>
@@ -88,20 +88,20 @@
                     <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect" id="vertical-menu-btn">
                         <i class="ri-menu-2-line align-middle" style="color: black"></i>
                     </button>
-                    <?php  
-                        $org = DB::connection('mysql')->select(                                                            '   
-                                select * from orginfo 
+                    <?php
+                        $org = DB::connection('mysql')->select(                                                            '
+                                select * from orginfo
                                 where orginfo_id = 1                                                                                                                      ',
-                        ); 
+                        );
                     ?>
                     <form class="app-search d-none d-lg-block">
                         <div class="position-relative">
                             @foreach ($org as $item)
                             <h4 style="color:rgb(48, 46, 46)" class="mt-2">{{$item->orginfo_name}}</h4>
                             @endforeach
-                            
+
                         </div>
-                    </form>                                         
+                    </form>
                 </div>
 
 
@@ -123,7 +123,7 @@
                                     width="32px" alt="Header Avatar" class="rounded-circle header-profile-user">
                             @endif
                             <span class="d-none d-xl-inline-block ms-1">
-                                {{ Auth::user()->fullname }} 
+                                {{ Auth::user()->fullname }}
                             </span>
                             <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                         </button>
@@ -147,7 +147,7 @@
             </div>
         </header>
         <style>
-            .nom6{ 
+            .nom6{
                 background: linear-gradient(to right,#ffafbd);
                 /* background: linear-gradient(to right, #c9ffbf, #ffafbd); */
             }
@@ -164,57 +164,63 @@
                     <ul class="metismenu list-unstyled" id="side-menu">
                         <li class="menu-title" style="color: white">Menu</li>
                         <li>
-                            <a href="{{ url('manage_dashboard') }}">  
+                            <a href="{{ url('manage_dashboard') }}">
                                 <i class="fa-solid fa-gauge-high text-info"></i>
                                 <span style="color: white">Dashboard</span>
-                            </a> 
-                        </li> 
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url('authencode_auto') }}">
+                                <i class="fa-solid fa-gauge-high text-info"></i>
+                                <span style="color: white">authencode_auto</span>
+                            </a>
+                        </li>
                         {{-- <li>
-                            <a href="javascript: void(0);" class="has-arrow waves-effect"> 
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
                                 <i class="fa-solid fa-clipboard-user text-info"></i>
                                 <span style="color: white">Check Sit</span>
                             </a>
                             <ul class="sub-menu" aria-expanded="true">
-                                <li><a href="{{ url('check_sit_day') }}">เช็คสิทธิ์รายวัน</a></li> 
-                                <li><a href="{{ url('check_sit_money') }}"> เช็คสิทธิ์ Money PK</a></li> 
+                                <li><a href="{{ url('check_sit_day') }}">เช็คสิทธิ์รายวัน</a></li>
+                                <li><a href="{{ url('check_sit_money') }}"> เช็คสิทธิ์ Money PK</a></li>
                             </ul>
                         </li> --}}
-                        
+
                         {{-- <li>
-                            <a href="javascript: void(0);" class="has-arrow waves-effect">  
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
                                 <i class="fa-solid fa-truck-medical text-danger"></i>
                                 <span style="color: white">Refer</span>
                             </a>
                             <ul class="sub-menu" aria-expanded="true">
-                                <li ><a href="{{ url('report_refer') }}" style="color: white">การใช้งานรถ Refer BK</a></li>  
-                                <li ><a href="{{ url('report_refer_hos') }}" style="color: white">การใช้งานรถ Refer Hos</a></li>  
+                                <li ><a href="{{ url('report_refer') }}" style="color: white">การใช้งานรถ Refer BK</a></li>
+                                <li ><a href="{{ url('report_refer_hos') }}" style="color: white">การใช้งานรถ Refer Hos</a></li>
                             </ul>
                         </li>  --}}
                         <li>
-                            <a href="javascript: void(0);" class="has-arrow waves-effect">  
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
                                 <i class="fa-regular fa-credit-card text-danger"></i>
                                 <span style="color: white">ลูกหนี้</span>
                             </a>
                             <ul class="sub-menu" aria-expanded="true">
-                                <li ><a href="{{ url('manage_pullacc') }}" style="color: white">ดึงลูกหนี้</a></li> 
+                                <li ><a href="{{ url('manage_pullacc') }}" style="color: white">ดึงลูกหนี้</a></li>
                                 {{-- <li ><a href="{{ url('check_kradook') }}" style="color: white">แผ่นโลหะกระดูก</a></li>   --}}
-                                {{-- <li ><a href="{{ url('check_khosaphok') }}" style="color: white">ข้อสะโพก</a></li>  --}} 
+                                {{-- <li ><a href="{{ url('check_khosaphok') }}" style="color: white">ข้อสะโพก</a></li>  --}}
                             </ul>
-                        </li> 
-                        <li> 
-                            <a href="javascript: void(0);" class="has-arrow waves-effect">   
+                        </li>
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
                                 <i class="fa-solid fa-gears text-danger me-2"></i>
                                 <span style="color: white">ตั่งค่า</span>
                             </a>
-                            <ul class="sub-menu" aria-expanded="true">  
+                            <ul class="sub-menu" aria-expanded="true">
                                 <li ><a href="{{ url('manage_setting') }}" style="color: white">กำหนดสิทธิ์ที่ต้องการดึง</a></li>
                             </ul>
-                           
-                               
-                                
-                           
-                        </li> 
-                        
+
+
+
+
+                        </li>
+
                     </ul>
                 </div>
                 <!-- Sidebar -->
@@ -329,7 +335,7 @@
     <link href="{{ asset('dis/styles/css/base.css') }}" rel="stylesheet">
     @yield('footer')
 
-    
+
     <script type="text/javascript">
         $(document).ready(function() {
             $('#example').DataTable();
@@ -339,16 +345,16 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
-            });       
+            });
 
         });
- 
+
 
         function Addopd() {
             var aopd = document.getElementById("ADDOPD").value;
             var code_name = document.getElementById("CODE_NAME").value;
-         
-           
+
+
                 var _token = $('input[name="_token"]').val();
                 $.ajax({
                 url: "{{url('add_opd_new')}}",
@@ -364,7 +370,7 @@
             })
         }
         function addpangipd() {
-            var aipd = document.getElementById("ADDIPD").value; 
+            var aipd = document.getElementById("ADDIPD").value;
             var _token = $('input[name="_token"]').val();
             $.ajax({
                 url: "{{url('add_ipd_new')}}",
