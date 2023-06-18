@@ -10,16 +10,16 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    { 
+    {
         if (!Schema::hasTable('pttype_acc'))
         {
-            Schema::connection('mysql_hos')->create('pttype_acc', function (Blueprint $table) {
+            Schema::connection('mysql3')->create('pttype_acc', function (Blueprint $table) {
                 $table->bigIncrements('pttype_acc_id');
-                $table->string('pttype_acc_code')->nullable();// 
-                $table->string('pttype_acc_name')->nullable();//  
-                $table->string('pttype_acc_eclaimid')->nullable();//  
-                $table->string('pttype_acc_nhsoadpcode')->nullable(); //   
- 
+                $table->string('pttype_acc_code')->nullable();//
+                $table->string('pttype_acc_name')->nullable();//
+                $table->string('pttype_acc_eclaimid')->nullable();//
+                $table->string('pttype_acc_nhsoadpcode')->nullable(); //
+
                 $table->timestamps();
             });
         }

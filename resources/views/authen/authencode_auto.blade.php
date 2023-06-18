@@ -161,7 +161,7 @@
                                             @endif
                                         @endif --}}
 
-                                        
+
 
                                         <br>
 
@@ -172,6 +172,10 @@
                                         <a href="{{ url('token_add') }}" class="btn btn-warning shadow-lg">
                                             <i class="fa-regular fa-id-card me-2"></i>
                                             Token
+                                        </a>
+                                        <a href="{{ url('pullauthencode_auto') }}" class="btn btn-warning shadow-lg">
+                                            <i class="fa-regular fa-id-card me-2"></i>
+                                            pullauthencode_auto
                                         </a>
                                     </div>
                                 </div>

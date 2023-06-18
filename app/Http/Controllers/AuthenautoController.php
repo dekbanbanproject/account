@@ -9,7 +9,7 @@ use App\Models\Visit_pttype_authen;
 use App\Models\Visit_pttype_authen_report;
 use App\Models\Patient;
 use App\Models\Vn_stat;
-use App\Models\Ovst;
+use App\Models\Authen_auto;
 use App\Models\Visit_pttype_token_authen;
 use Stevebauman\Location\Facades\Location;
 use Http;
@@ -194,7 +194,7 @@ class AuthenautoController extends Controller
 
     public function pullauthencode_auto(Request $request)
     {
-        $data_hos = DB::connection('mysql_hos')->select('
+        $data_hos_ = DB::connection('mysql3')->select('
                 SELECT o.vn,ifnull(o.an,"") as an,o.hn,showcid(pt.cid) as cid
                 ,concat(pt.pname,pt.fname," ",pt.lname) as ptname
                 ,o.vstdate,ra.ServiceCode,ra.ServiceType
@@ -211,6 +211,21 @@ class AuthenautoController extends Controller
                 group by o.vn
             ');
             // where o.vstdate between "' . $startdate . '" and "' . $enddate . '"
+            foreach ($data_hos_ as $key => $value) {
+                $check = Authen_auto::where('vn', $value->vn)->count();
+                dd($check);
+                if ($check == 0) {
+                    Authen_auto::insert([
+                        'vn' => $value->vn,
+                        'hn' => $value->hn,
+                        'cid' => $value->cid,
+                        'vstdate' => $value->vstdate,
+                        'ptname' => $value->ptname,
+                        'ServiceCode' => $value->ServiceCode,
+                        'ServiceType' => $value->ServiceType,
+                    ]);
+                }
+            }
         return view('authen.pullauthencode_auto',[
             'data_hos'            =>   $data_hos,
 
