@@ -213,7 +213,7 @@ class AuthenautoController extends Controller
             // where o.vstdate between "' . $startdate . '" and "' . $enddate . '"
             foreach ($data_hos_ as $key => $value) {
                 $check = Authen_auto::where('vn', $value->vn)->count();
-                dd($check);
+                // dd($check);
                 if ($check == 0) {
                     Authen_auto::insert([
                         'vn' => $value->vn,
