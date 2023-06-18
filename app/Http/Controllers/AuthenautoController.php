@@ -213,16 +213,64 @@ class AuthenautoController extends Controller
             // where o.vstdate between "' . $startdate . '" and "' . $enddate . '"
             foreach ($data_hos_ as $key => $value) {
                 $check = Authen_auto::where('vn', $value->vn)->count();
+                    $collection = Http::get('http://localhost:8189/api/smartcard/read?readImageFlag=true')->collect();
+                    $datapatient = DB::connection('mysql3')->table('patient')->where('cid','=',$collection['pid'])->first();
+                    if ($datapatient->hometel != null) {
+                        $hometel = $datapatient->hometel;
+                    } else {
+                        $hometel = '';
+                    }
+                    // if ($datapatient->hn != null) {
+                    //     $hn = $datapatient->hn;
+                    // } else {
+                    //     $hn = '';
+                    // }
+                    // if ($datapatient->hcode != null) {
+                    //     $hcode = $datapatient->hcode;
+                    // } else {
+                    //     $hcode = '';
+                    // }
+                    $curl = curl_init();
+                    curl_setopt_array($curl, array(
+                        CURLOPT_URL => "http://localhost:8189/api/smartcard/read?readImageFlag=true",
+                        CURLOPT_RETURNTRANSFER => 1,
+                        CURLOPT_SSL_VERIFYHOST => 0,
+                        CURLOPT_SSL_VERIFYPEER => 0,
+                        CURLOPT_CUSTOMREQUEST => 'GET',
+                    ));
+
+                    $response = curl_exec($curl);
+                    curl_close($curl);
+                    $content = $response;
+                    $result = json_decode($content, true);
+
+                    // dd($result);
+
+                    @$pid = $result['pid'];
+                    @$correlationId = $result['correlationId'];
+                    @$claimType = $result['claimTypes'];
+
+                    $pid                = @$pid;
+                    $claimType          = @$claimType;
+                    $correlationId      = @$correlationId;
+                    $mobile             = $hometel;
+
+            // foreach ($data_hos_ as $key => $value) {
+            //     $check = Authen_auto::where('vn', $value->vn)->count();
                 // dd($check);
                 if ($check == 0) {
                     Authen_auto::insert([
-                        'vn' => $value->vn,
-                        'hn' => $value->hn,
-                        'cid' => $value->cid,
-                        'vstdate' => $value->vstdate,
-                        'ptname' => $value->ptname,
+                        'vn'          => $value->vn,
+                        'hn'          => $value->hn,
+                        'cid'         => $pid,
+                        'vstdate'     => $value->vstdate,
+                        'ptname'      => $value->ptname,
                         'ServiceCode' => $value->ServiceCode,
                         'ServiceType' => $value->ServiceType,
+
+                        'claimType'      => $claimType,
+                        'correlationId'  => $correlationId,
+                        'mobile'         => $mobile,
                     ]);
                 }
             }
