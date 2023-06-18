@@ -227,7 +227,7 @@ class AuthenautoController extends Controller
                 }
             }
         return view('authen.pullauthencode_auto',[
-            'data_hos'            =>   $data_hos,
+            'data_hos'            =>   $data_hos_,
 
         ]);
     }
