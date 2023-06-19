@@ -216,7 +216,8 @@ class AuthenautoController extends Controller
             foreach ($data_hos_ as $key => $value) {
                 $check = Authen_auto::where('vn', $value->vn)->count();
                     $collection = Http::get('http://localhost:8189/api/smartcard/read?readImageFlag=true')->collect();
-                    $datapatient = DB::connection('mysql3')->table('patient')->where('cid','=',$collection['pid'])->first();
+
+                    $datapatient = DB::connection('mysql3')->table('patient')->where('cid','=',$value->cid)->first();
                     if ($datapatient->hometel != null) {
                         $hometel = $datapatient->hometel;
                     } else {
