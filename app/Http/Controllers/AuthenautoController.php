@@ -293,9 +293,9 @@ class AuthenautoController extends Controller
                 'hcode'            =>  $value->hcode
             ]);
         }
-
+        // return back();
         return view('authen.sendauthencode_auto',[
-            'data_hos'            =>   $data_hos_,
+            'data_authen_'            =>   $data_authen_,
 
         ]);
     }

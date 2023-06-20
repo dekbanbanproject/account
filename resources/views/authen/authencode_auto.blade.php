@@ -173,11 +173,11 @@
                                             <i class="fa-regular fa-id-card me-2"></i>
                                             Token
                                         </a>
-                                        <a href="{{ url('pullauthencode_auto') }}" class="btn btn-warning shadow-lg">
+                                        <a href="{{ url('pullauthencode_auto') }}" class="btn btn-warning shadow-lg" target="_blank">
                                             <i class="fa-regular fa-id-card me-2"></i>
                                             pullauthencode_auto
                                         </a>
-                                        <a href="{{ url('sendauthencode_auto') }}" class="btn btn-warning shadow-lg">
+                                        <a href="{{ url('sendauthencode_auto') }}" class="btn btn-warning shadow-lg" target="_blank">
                                             <i class="fa-regular fa-id-card me-2"></i>
                                             Authen Auto
                                         </a>
