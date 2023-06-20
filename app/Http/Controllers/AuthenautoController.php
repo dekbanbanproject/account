@@ -196,6 +196,8 @@ class AuthenautoController extends Controller
     {
         // $collection = Http::get('http://localhost:8189/api/smartcard/read?readImageFlag=true')->collect();
         // dd($collection);
+
+        Authen_auto:: truncate();
         $data_hos_ = DB::connection('mysql3')->select('
                 SELECT o.vn,ifnull(o.an,"") as an,o.hn,showcid(pt.cid) as cid,pt.hometel
                 ,concat(pt.pname,pt.fname," ",pt.lname) as ptname
@@ -207,21 +209,21 @@ class AuthenautoController extends Controller
                 left join pttype ptt on ptt.pttype=o.pttype
                 LEFT JOIN rcmdb.authencode ra ON ra.VN = o.vn
 
-                where v.vstdate = CURDATE()
-
-                AND ptt.hipdata_code="UCS"
-                AND pt.hometel <> ""
-
-                AND o.an IS NULL
-                AND ptt.pttype NOT IN("M1","M2","M3","M4","M5","M6","M7")
-                AND ServiceCode IS NULL
+                where o.vstdate = CURDATE()
+                AND ServiceCode IS NULL AND ptt.hipdata_code="UCS" AND pt.hometel <> ""
+                AND pt.hometel <> "ไม่มี" AND pt.hometel <> "-" AND pt.hometel <> "จำไม่ได้" AND pt.hometel <> "."
+                AND o.an IS NULL AND ptt.pttype NOT IN("M1","M2","M3","M4","M5","M6","M7")
+                
             ');
             // group by o.vn
             // WHERE o.vstdate = CURDATE()
             // where o.vstdate between "' . $startdate . '" and "' . $enddate . '"
+
+
+
             foreach ($data_hos_ as $key => $value) {
                 $check = Authen_auto::where('vn', $value->vn)->count();
-                
+
 
                     $curl = curl_init();
                     curl_setopt_array($curl, array(
