@@ -197,9 +197,9 @@ class AuthenautoController extends Controller
         // $collection = Http::get('http://localhost:8189/api/smartcard/read?readImageFlag=true')->collect();
         // dd($collection);
         $data_hos_ = DB::connection('mysql3')->select('
-                SELECT o.vn,ifnull(o.an,"") as an,o.hn,showcid(pt.cid) as cid
+                SELECT o.vn,ifnull(o.an,"") as an,o.hn,showcid(pt.cid) as cid,pt.hometel
                 ,concat(pt.pname,pt.fname," ",pt.lname) as ptname
-                ,o.vstdate,ra.ServiceCode,ra.ServiceType,v.hcode,ptt.hipdata_code
+                ,o.vstdate,ra.ServiceCode,ra.ServiceType,v.hcode,ptt.hipdata_code,ptt.pttype
 
                 from ovst o
                 left join vn_stat v on v.vn=o.vn
@@ -207,26 +207,22 @@ class AuthenautoController extends Controller
                 left join pttype ptt on ptt.pttype=o.pttype
                 LEFT JOIN rcmdb.authencode ra ON ra.VN = o.vn
 
-                where o.vstdate = CURDATE()
-                AND ServiceCode IS NULL AND ptt.hipdata_code="UCS" AND pt.hometel <> "" 
-                AND pt.hometel <> "ไม่มี" AND pt.hometel <> "-" AND pt.hometel <> "จำไม่ได้" AND pt.hometel <> "." 
+                where v.vstdate = CURDATE()
+
+                AND ptt.hipdata_code="UCS"
+                AND pt.hometel <> ""
+
                 AND o.an IS NULL
-                LIMIT 5
+                AND ptt.pttype NOT IN("M1","M2","M3","M4","M5","M6","M7")
+                AND ServiceCode IS NULL
             ');
-            // group by o.vn 
+            // group by o.vn
             // WHERE o.vstdate = CURDATE()
             // where o.vstdate between "' . $startdate . '" and "' . $enddate . '"
             foreach ($data_hos_ as $key => $value) {
                 $check = Authen_auto::where('vn', $value->vn)->count();
-                    $collection = Http::get('http://localhost:8189/api/smartcard/read?readImageFlag=true')->collect();
+                
 
-                    $datapatient = DB::connection('mysql3')->table('patient')->where('cid','=',$value->cid)->first();
-                    if ($datapatient->hometel != null) {
-                        $hometel = $datapatient->hometel;
-                    } else {
-                        $hometel = '';
-                    }
-                     
                     $curl = curl_init();
                     curl_setopt_array($curl, array(
                         CURLOPT_URL => "http://localhost:8189/api/smartcard/read?readImageFlag=true",
@@ -241,13 +237,13 @@ class AuthenautoController extends Controller
                     $content = $response;
                     $result = json_decode($content, true);
 
-                    dd($result);
+                    // dd($result);
 
                     @$pid = $result['pid'];
                     @$correlationId = $result['correlationId'];
                     @$claimTypes = $result['claimTypes'];
 
-                     
+
                 if ($check == 0) {
                     Authen_auto::insert([
                         'vn'             => $value->vn,
@@ -256,15 +252,15 @@ class AuthenautoController extends Controller
                         'vstdate'        => $value->vstdate,
                         'ptname'         => $value->ptname,
                         'ServiceCode'    => $value->ServiceCode,
-                        'ServiceType'    => $value->ServiceType, 
+                        'ServiceType'    => $value->ServiceType,
                         'claimType'      => "PG0060001",
                         'claimTypename'  => "เข้ารับบริการรักษาทั่วไป (OPD/ IPD/ PP)",
                         'correlationId'  =>$result['correlationId'],
-                        'mobile'         => $hometel,
+                        'mobile'         => $value->hometel,
                         'hcode'          => $value->hcode,
                         'hipdata_code'   => "UCS"
                     ]);
-                
+
                 }
             }
         return view('authen.pullauthencode_auto',[
@@ -277,10 +273,10 @@ class AuthenautoController extends Controller
     {
         $ip = $request->ip();
         // $authen = Http::post("http://localhost:8189/api/nhso-service/save-as-draft");
-     
+
         $data_authen_ = DB::connection('mysql')->select('
             SELECT vn,hn,cid,ptname,vstdate,claimType,claimTypename,correlationId,mobile,hcode
-            from authen_auto 
+            from authen_auto
             where vstdate = CURDATE()
         ');
 
@@ -292,10 +288,10 @@ class AuthenautoController extends Controller
                 'mobile'           =>  $value->mobile,
                 'correlationId'    =>  $value->correlationId,
                 'hn'               =>  $value->hn,
-                'hcode'            =>  $value->hcode                
+                'hcode'            =>  $value->hcode
             ]);
         }
- 
+
         return view('authen.sendauthencode_auto',[
             'data_hos'            =>   $data_hos_,
 
