@@ -59,5 +59,7 @@ Route::middleware(['type'])->group(function(){
 
     Route::match(['get','post'],'pullauthencode_auto',[App\Http\Controllers\AuthenautoController::class,'pullauthencode_auto'])->name('pullauthencode_auto');
     Route::match(['get','post'],'sendauthencode_auto',[App\Http\Controllers\AuthenautoController::class,'sendauthencode_auto'])->name('sendauthencode_auto');
+    Route::match(['get','post'],'smartcard_authencode_save',[App\Http\Controllers\AuthenautoController::class,'smartcard_authencode_save'])->name('smartcard_authencode_save');
+
 
 });

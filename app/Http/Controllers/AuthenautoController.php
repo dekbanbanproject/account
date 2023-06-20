@@ -173,6 +173,7 @@ class AuthenautoController extends Controller
         $hcode = $request->hcode;
 
         $authen = Http::post("http://localhost:8189/api/nhso-service/confirm-save",
+        // dd($authen);
         [
             'pid'              =>  $cid,
             'claimType'        =>  $claimType,
@@ -282,18 +283,28 @@ class AuthenautoController extends Controller
             where vstdate = CURDATE()
         ');
 
-        foreach ($data_authen_ as $key => $value) {
+        // foreach ($data_authen_ as $key => $value) {
             $authen = Http::post("http://localhost:8189/api/nhso-service/confirm-save",
             [
-                'pid'              =>  $value->cid,
-                'claimType'        =>  $value->claimType,
-                'mobile'           =>  $value->mobile,
-                'correlationId'    =>  $value->correlationId,
-                'hn'               =>  $value->hn,
-                'hcode'            =>  $value->hcode
+                // 'pid'              =>  $value->cid,
+                // 'claimType'        =>  $value->claimType,
+                // 'mobile'           =>  $value->mobile,
+                // 'correlationId'    =>  $value->correlationId,
+                // 'hn'               =>  $value->hn,
+                // 'hcode'            =>  $value->hcode
+
+                'pid'              =>  '3461400144273',
+                'claimType'        =>  'PG0060001',
+                'mobile'           =>  '0915806947',
+                'correlationId'    =>  '041fdb70-b4ef-4498-88c7-1bab0e6a279a',
+                'hn'               =>  '0339243',
+                'hcode'            =>  '10978'
             ]);
-        }
+        // }
         // return back();
+        // return response()->json([
+        //     'status'     => '200'
+        // ]);
         return view('authen.sendauthencode_auto',[
             'data_authen_'            =>   $data_authen_,
 
