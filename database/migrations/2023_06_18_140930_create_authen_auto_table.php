@@ -24,8 +24,11 @@ return new class extends Migration
                 $table->string('ServiceCode')->nullable(); //
                 $table->string('ServiceType')->nullable(); //
                 $table->string('claimType')->nullable(); //
+                $table->string('claimTypename')->nullable(); //
                 $table->string('correlationId')->nullable(); //
                 $table->string('mobile')->nullable(); //
+                $table->string('hcode')->nullable(); //
+                $table->string('hipdata_code')->nullable(); //
                 $table->timestamps();
             });
         }

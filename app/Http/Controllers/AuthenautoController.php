@@ -194,12 +194,12 @@ class AuthenautoController extends Controller
 
     public function pullauthencode_auto(Request $request)
     {
-        $collection = Http::get('http://localhost:8189/api/smartcard/read?readImageFlag=true')->collect();
-        dd($collection);
+        // $collection = Http::get('http://localhost:8189/api/smartcard/read?readImageFlag=true')->collect();
+        // dd($collection);
         $data_hos_ = DB::connection('mysql3')->select('
                 SELECT o.vn,ifnull(o.an,"") as an,o.hn,showcid(pt.cid) as cid
                 ,concat(pt.pname,pt.fname," ",pt.lname) as ptname
-                ,o.vstdate,ra.ServiceCode,ra.ServiceType
+                ,o.vstdate,ra.ServiceCode,ra.ServiceType,v.hcode,ptt.hipdata_code
 
                 from ovst o
                 left join vn_stat v on v.vn=o.vn
@@ -207,11 +207,14 @@ class AuthenautoController extends Controller
                 left join pttype ptt on ptt.pttype=o.pttype
                 LEFT JOIN rcmdb.authencode ra ON ra.VN = o.vn
 
-                where o.vstdate between "2023-06-18" and "2023-06-18"
-                AND ServiceCode IS NULL
+                where o.vstdate = CURDATE()
+                AND ServiceCode IS NULL AND ptt.hipdata_code="UCS" AND pt.hometel <> "" 
+                AND pt.hometel <> "ไม่มี" AND pt.hometel <> "-" AND pt.hometel <> "จำไม่ได้" AND pt.hometel <> "." 
                 AND o.an IS NULL
-                group by o.vn
+                LIMIT 5
             ');
+            // group by o.vn 
+            // WHERE o.vstdate = CURDATE()
             // where o.vstdate between "' . $startdate . '" and "' . $enddate . '"
             foreach ($data_hos_ as $key => $value) {
                 $check = Authen_auto::where('vn', $value->vn)->count();
@@ -223,16 +226,7 @@ class AuthenautoController extends Controller
                     } else {
                         $hometel = '';
                     }
-                    // if ($datapatient->hn != null) {
-                    //     $hn = $datapatient->hn;
-                    // } else {
-                    //     $hn = '';
-                    // }
-                    // if ($datapatient->hcode != null) {
-                    //     $hcode = $datapatient->hcode;
-                    // } else {
-                    //     $hcode = '';
-                    // }
+                     
                     $curl = curl_init();
                     curl_setopt_array($curl, array(
                         CURLOPT_URL => "http://localhost:8189/api/smartcard/read?readImageFlag=true",
@@ -247,34 +241,30 @@ class AuthenautoController extends Controller
                     $content = $response;
                     $result = json_decode($content, true);
 
-                    // dd($result);
+                    dd($result);
 
                     @$pid = $result['pid'];
                     @$correlationId = $result['correlationId'];
                     @$claimTypes = $result['claimTypes'];
 
-                    $pid                = @$pid;
-                    $claimType          = @$claimTypes;
-                    $correlationId      = @$correlationId;
-                    $mobile             = $hometel;
-
-            // foreach ($data_hos_ as $key => $value) {
-            //     $check = Authen_auto::where('vn', $value->vn)->count();
-                // dd($check);
+                     
                 if ($check == 0) {
                     Authen_auto::insert([
-                        'vn'          => $value->vn,
-                        'hn'          => $value->hn,
-                        'cid'         => $pid,
-                        'vstdate'     => $value->vstdate,
-                        'ptname'      => $value->ptname,
-                        'ServiceCode' => $value->ServiceCode,
-                        'ServiceType' => $value->ServiceType,
-
-                        'claimType'      => $claimType,
-                        'correlationId'  => $correlationId,
-                        'mobile'         => $mobile,
+                        'vn'             => $value->vn,
+                        'hn'             => $value->hn,
+                        'cid'            => $value->cid,
+                        'vstdate'        => $value->vstdate,
+                        'ptname'         => $value->ptname,
+                        'ServiceCode'    => $value->ServiceCode,
+                        'ServiceType'    => $value->ServiceType, 
+                        'claimType'      => "PG0060001",
+                        'claimTypename'  => "เข้ารับบริการรักษาทั่วไป (OPD/ IPD/ PP)",
+                        'correlationId'  =>$result['correlationId'],
+                        'mobile'         => $hometel,
+                        'hcode'          => $value->hcode,
+                        'hipdata_code'   => "UCS"
                     ]);
+                
                 }
             }
         return view('authen.pullauthencode_auto',[
@@ -287,28 +277,25 @@ class AuthenautoController extends Controller
     {
         $ip = $request->ip();
         // $authen = Http::post("http://localhost:8189/api/nhso-service/save-as-draft");
-        $cid = $request->person_id;
-        $tel = $request->mobile;
-        $claimType = $request->claimType;
-        $correlationId = $request->correlationId;
-        $hn = $request->hn;
-        $hcode = $request->hcode;
+     
+        $data_authen_ = DB::connection('mysql')->select('
+            SELECT vn,hn,cid,ptname,vstdate,claimType,claimTypename,correlationId,mobile,hcode
+            from authen_auto 
+            where vstdate = CURDATE()
+        ');
 
-        $authen = Http::post("http://localhost:8189/api/nhso-service/confirm-save",
-        [
-            'pid'              =>  $cid,
-            'claimType'        =>  $claimType,
-            'mobile'           =>  $tel,
-            'correlationId'    =>  $correlationId,
-            // 'hcode'            =>  $hcode,
-            'hn'               =>  $hn
-        ]);
-
-        Patient::where('cid', $cid)
-            ->update([
-                'hometel'         => $tel
+        foreach ($data_authen_ as $key => $value) {
+            $authen = Http::post("http://localhost:8189/api/nhso-service/confirm-save",
+            [
+                'pid'              =>  $value->cid,
+                'claimType'        =>  $value->claimType,
+                'mobile'           =>  $value->mobile,
+                'correlationId'    =>  $value->correlationId,
+                'hn'               =>  $value->hn,
+                'hcode'            =>  $value->hcode                
             ]);
-
+        }
+ 
         return view('authen.sendauthencode_auto',[
             'data_hos'            =>   $data_hos_,
 

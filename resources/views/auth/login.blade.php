@@ -47,10 +47,11 @@
                 <div class="mx-auto app-login-box col-sm-12 col-md-10 col-lg-9">
                     {{-- <div class="app-logo"></div> --}}
                     <div>
-                        <img width="150" class="rounded mb-5" src="{{ asset('distemplate/images/dataaudit.jpg') }}" alt="">
+                        {{-- <img width="150" class="rounded mb-5" src="{{ asset('distemplate/images/dataaudit.jpg') }}" alt=""> --}}
+
                     </div>
                     <h4 class="mb-0">
-                        <span class="d-block">Welcome Account Dee,</span>
+                        <span class="d-block">Welcome Maha Tep,</span>
                         <span>Please sign in to your account.</span>
                     </h4>
                     <h6 class="mt-3">No account?
