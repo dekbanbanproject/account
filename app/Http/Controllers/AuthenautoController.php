@@ -274,7 +274,7 @@ class AuthenautoController extends Controller
 
     public function sendauthencode_auto(Request $request)
     {
-        $ip = $request->ip();
+        // $ip = $request->ip();
         // $authen = Http::post("http://localhost:8189/api/nhso-service/save-as-draft");
 
         $data_authen_ = DB::connection('mysql')->select('
@@ -293,22 +293,22 @@ class AuthenautoController extends Controller
                 // 'hn'               =>  $value->hn,
                 // 'hcode'            =>  $value->hcode
 
-                'pid'              =>  '3461400144273',
+                'pid'              =>  '5360400003331',
                 'claimType'        =>  'PG0060001',
-                'mobile'           =>  '0915806947',
-                'correlationId'    =>  '041fdb70-b4ef-4498-88c7-1bab0e6a279a',
-                'hn'               =>  '0339243',
+                'mobile'           =>  '0982278384',
+                'correlationId'    =>  '8cfdc72c-a2d1-4585-b4a1-cfdf884e4e41',
+                'hn'               =>  '0194982',
                 'hcode'            =>  '10978'
             ]);
         // }
         // return back();
-        // return response()->json([
-        //     'status'     => '200'
-        // ]);
-        return view('authen.sendauthencode_auto',[
-            'data_authen_'            =>   $data_authen_,
-
+        return response()->json([
+            'status'     => '200'
         ]);
+        // return view('authen.sendauthencode_auto',[
+        //     'data_authen_'            =>   $data_authen_,
+
+        // ]);
     }
 
 }
