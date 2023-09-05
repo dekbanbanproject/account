@@ -25,7 +25,8 @@ Route::get('/', function () {
     }else{
         return view('auth.login');
     }
-  })->name('wel.index');
+  })->name('index');
+// })->name('wel.index');
 
 Auth::routes();
 

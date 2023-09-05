@@ -53,7 +53,32 @@
     <link href="distemplate/libs/dropzone/min/dropzone.min.css" rel="stylesheet" type="text/css" />
 </head>
 
-
+<style>
+    body{
+        /* background: */
+            /* url(/pkbackoffice/public/images/bg7.png);  */
+            /* -webkit-background-size: cover; */
+        background-color:rgb(245, 240, 240);
+        background-repeat: no-repeat;
+		background-attachment: fixed;
+		/* background-size: cover; */
+        background-size: 100% 100%;
+        /* display: flex; */
+        /* align-items: center; */
+        /* justify-content: center; */
+        /* width: 100vw;   ให้เต็มพอดี */
+        /* height: 100vh; ให้เต็มพอดี  */
+        }
+    .Bgsidebar {
+  		background-image: url('/mahathep/public/images/bgside.jpg');
+		background-repeat: no-repeat;
+	}
+    .Bgheader {
+  		background-image: url('/mahathep/public/images/bgheader.jpg');
+		background-repeat: no-repeat;
+	}
+    
+</style>
 <body data-topbar="dark">
 
     <!-- Begin page -->
@@ -145,38 +170,41 @@
                             </form>
                         </div>
                     </div>
+                    <div class="dropdown d-inline-block user-dropdown">
+
+                    </div>
                 </div>
             </div>
         </header>
-        <style>
+        {{-- <style>
             .nom6{
                 background: linear-gradient(to right,#ffafbd);
                 /* background: linear-gradient(to right, #c9ffbf, #ffafbd); */
             }
-        </style>
+        </style> --}}
 
         <!-- ========== Left Sidebar Start ========== -->
         <div class="vertical-menu">
-
-            <div data-simplebar class="h-100" style="background-color: #ffafbd">
+            <div data-simplebar class="h-100">
+            {{-- <div data-simplebar class="h-100" style="background-color: #ffafbd"> --}}
                 {{-- <div data-simplebar class="h-100 nom6"> --}}
                 <!--- Sidemenu -->
                 <div id="sidebar-menu">
                     <!-- Left Menu Start -->
                     <ul class="metismenu list-unstyled" id="side-menu">
-                        <li class="menu-title" style="color: white">Menu</li>
+                        <li class="menu-title">Menu</li>
                         <li>
                             <a href="{{ url('manage_dashboard') }}" target="_blank">
                                 <i class="fa-solid fa-gauge-high text-info"></i>
-                                <span style="color: white">Dashboard</span>
+                                <span>Dashboard</span>
                             </a>
                         </li>
-                        <li>
+                        {{-- <li>
                             <a href="{{ url('authencode_auto') }}" target="_blank">
                                 <i class="fa-solid fa-gauge-high text-info"></i>
-                                <span style="color: white">authencode_auto</span>
+                                <span >authencode_auto</span>
                             </a>
-                        </li>
+                        </li> --}}
                         {{-- <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect">
                                 <i class="fa-solid fa-clipboard-user text-info"></i>
@@ -201,10 +229,10 @@
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect">
                                 <i class="fa-regular fa-credit-card text-danger"></i>
-                                <span style="color: white">ลูกหนี้</span>
+                                <span>ลูกหนี้</span>
                             </a>
                             <ul class="sub-menu" aria-expanded="true">
-                                <li ><a href="{{ url('manage_pullacc') }}" style="color: white" target="_blank">ดึงลูกหนี้</a></li>
+                                <li ><a href="{{ url('manage_pullacc') }}" target="_blank">ดึงลูกหนี้</a></li>
                                 {{-- <li ><a href="{{ url('check_kradook') }}" style="color: white">แผ่นโลหะกระดูก</a></li>   --}} 
                             </ul>
                         </li>
@@ -324,12 +352,20 @@
     <script type="text/javascript" src="{{ asset('fullcalendar/lib/moment.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('fullcalendar/fullcalendar.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('fullcalendar/lang/th.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('dis/vendors/daterangepicker/daterangepicker.js') }}"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('assets/jquery-tabledit/jquery.tabledit.min.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('dis/js/form-components/toggle-switch.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('dis/js/form-components/datepicker.js') }}"></script>
+    <!-- App js -->
+    <script src="{{ asset('dis/js/app.js') }}"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- App js -->
     <script src="{{ asset('dis/js/app.js') }}"></script>
-    <link href="{{ asset('dis/styles/css/base.css') }}" rel="stylesheet">
+    <link href="{{ asset('dis/styles/css/base.css') }}" rel="stylesheet"> --}}
     @yield('footer')
 
 

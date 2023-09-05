@@ -1,10 +1,25 @@
 @extends('layouts.manage') 
 @section('title', 'DTAD-ACCOUNT || DASHBOARD')
    
-
-
 @section('content')
-   
+<script>
+    function TypeAdmin() {
+        window.location.href = '{{ route('index') }}';
+    }
+</script>
+<?php
+if (Auth::check()) {
+    $type = Auth::user()->type;
+    $iduser = Auth::user()->id;
+} else {
+    echo "<body onload=\"TypeAdmin()\"></body>";
+    exit();
+}
+$url = Request::url();
+$pos = strrpos($url, '/') + 1;
+$ynow = date('Y')+543;
+$yb =  date('Y')+542;
+?>
     <?php  
         $ynow = date('Y')+543;
         $mo =  date('m');
@@ -51,17 +66,15 @@
                display:none;
                }
     </style>
-       
-    <div class="container-fluid">
-        <div id="preloader">
-            <div id="status">
-                <div class="spinner">
-                    
+
+   <div class="tabs-animation">
+            <div id="preloader">
+                <div id="status">
+                    <div class="spinner"> 
+                    </div>
                 </div>
             </div>
-        </div>  
-        
-            <div class="row">
+            <div class="row mt-2">
              
                     <div class="col-xl-3 col-md-3">
                         <div class="main-card mb-3 card">
@@ -93,6 +106,7 @@
                             </div> 
                         </div> 
                     </div> 
+
                     <div class="col-xl-3 col-md-3">
                         <div class="main-card mb-3 card">
                             <div class="grid-menu-col">
@@ -123,6 +137,7 @@
                             </div> 
                         </div> 
                     </div>
+
                     <div class="col-xl-3 col-md-3">
                         <div class="main-card mb-3 card">
                             <div class="grid-menu-col">
@@ -200,9 +215,16 @@
             $('#example').DataTable();
             $('#example2').DataTable();
             $('#datepicker').datepicker({
-                format: 'yyyy-mm-dd'
+            format: 'yyyy-mm-dd'
             });
             $('#datepicker2').datepicker({
+                format: 'yyyy-mm-dd'
+            });
+
+            $('#datepicker3').datepicker({
+                format: 'yyyy-mm-dd'
+            });
+            $('#datepicker4').datepicker({
                 format: 'yyyy-mm-dd'
             });
               
