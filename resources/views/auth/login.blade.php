@@ -51,7 +51,7 @@
 
                     </div>
                     <h4 class="mb-0">
-                        <span class="d-block">Welcome Maha Tep,</span>
+                        <span class="d-block">Welcome Account-Mahathep,</span>
                         <span>Please sign in to your account.</span>
                     </h4>
                     <h6 class="mt-3">No account?

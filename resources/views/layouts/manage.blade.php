@@ -60,12 +60,13 @@
     <div id="layout-wrapper">
 
         <header id="page-topbar">
-            <div class="navbar-header" style="background-color: rgb(252, 252, 252)">
-
+            {{-- <div class="navbar-header" style="background-color: rgb(252, 252, 252)"> --}}
+                <div class="navbar-header shadow" style="background-color: rgba(237, 199, 247)">
 
                 <div class="d-flex">
                     <!-- LOGO -->
-                    <div class="navbar-brand-box">
+                    {{-- <div class="navbar-brand-box"> --}}
+                        <div class="navbar-brand-box" style="background-color: rgb(255, 255, 255)">
                         <a href="" class="logo logo-dark">
                             <span class="logo-sm">
                                 <img src="distemplate/images/dataaudit.jpg" alt="logo-sm" height="22">
@@ -80,28 +81,29 @@
                                 <img src="{{ asset('distemplate/images/dataaudit.jpg') }}" alt="logo-sm-light" height="40">
                             </span>
                             <span class="logo-lg">
-                                <h4 style="color:rgb(41, 41, 41)" class="mt-4">DTAD-ACCOUNT</h4>
+                                <h4 style="color:rgb(237, 199, 247, 0.781)" class="mt-4">MAHATHEP</h4>
                             </span>
                         </a>
                     </div>
 
                     <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect" id="vertical-menu-btn">
-                        <i class="ri-menu-2-line align-middle" style="color: black"></i>
+                        <i class="ri-menu-2-line align-middle" style="color: rgb(255, 255, 255)"></i>
                     </button>
+                    <h4 style="color:rgb(255, 255, 255)" class="mt-4">ACCOUNT</h4>
                     <?php
                         $org = DB::connection('mysql')->select(                                                            '
                                 select * from orginfo
                                 where orginfo_id = 1                                                                                                                      ',
                         );
                     ?>
-                    <form class="app-search d-none d-lg-block">
+                    {{-- <form class="app-search d-none d-lg-block">
                         <div class="position-relative">
                             @foreach ($org as $item)
                             <h4 style="color:rgb(48, 46, 46)" class="mt-2">{{$item->orginfo_name}}</h4>
                             @endforeach
 
                         </div>
-                    </form>
+                    </form> --}}
                 </div>
 
 
@@ -164,13 +166,13 @@
                     <ul class="metismenu list-unstyled" id="side-menu">
                         <li class="menu-title" style="color: white">Menu</li>
                         <li>
-                            <a href="{{ url('manage_dashboard') }}">
+                            <a href="{{ url('manage_dashboard') }}" target="_blank">
                                 <i class="fa-solid fa-gauge-high text-info"></i>
                                 <span style="color: white">Dashboard</span>
                             </a>
                         </li>
                         <li>
-                            <a href="{{ url('authencode_auto') }}">
+                            <a href="{{ url('authencode_auto') }}" target="_blank">
                                 <i class="fa-solid fa-gauge-high text-info"></i>
                                 <span style="color: white">authencode_auto</span>
                             </a>
@@ -202,24 +204,19 @@
                                 <span style="color: white">ลูกหนี้</span>
                             </a>
                             <ul class="sub-menu" aria-expanded="true">
-                                <li ><a href="{{ url('manage_pullacc') }}" style="color: white">ดึงลูกหนี้</a></li>
-                                {{-- <li ><a href="{{ url('check_kradook') }}" style="color: white">แผ่นโลหะกระดูก</a></li>   --}}
-                                {{-- <li ><a href="{{ url('check_khosaphok') }}" style="color: white">ข้อสะโพก</a></li>  --}}
+                                <li ><a href="{{ url('manage_pullacc') }}" style="color: white" target="_blank">ดึงลูกหนี้</a></li>
+                                {{-- <li ><a href="{{ url('check_kradook') }}" style="color: white">แผ่นโลหะกระดูก</a></li>   --}} 
                             </ul>
                         </li>
-                        <li>
+                        {{-- <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect">
                                 <i class="fa-solid fa-gears text-danger me-2"></i>
                                 <span style="color: white">ตั่งค่า</span>
                             </a>
                             <ul class="sub-menu" aria-expanded="true">
                                 <li ><a href="{{ url('manage_setting') }}" style="color: white">กำหนดสิทธิ์ที่ต้องการดึง</a></li>
-                            </ul>
-
-
-
-
-                        </li>
+                            </ul> 
+                        </li> --}}
 
                     </ul>
                 </div>
