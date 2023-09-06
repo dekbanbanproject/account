@@ -11,10 +11,9 @@
                             <div class="position-relative h-100 d-flex justify-content-center align-items-center bg-plum-plate" tabindex="-1">
                                 <div class="slide-img-bg" style="background-image: url('images/originals/city.jpg');"></div>
                                 <div class="slider-content">
-                                    <h3>Perfect Balance</h3>
+                                    <h1>Mahathep Auto</h1>
                                     <p>
-                                        ArchitectUI is like a dream. Some think it's too good to be true! Extensive
-                                        collection of unified React Boostrap Components and Elements.
+                                        Pull Data Ato
                                     </p>
                                 </div>
                             </div>
@@ -23,10 +22,9 @@
                             <div class="position-relative h-100 d-flex justify-content-center align-items-center bg-premium-dark" tabindex="-1">
                                 <div class="slide-img-bg" style="background-image: url('images/originals/citynights.jpg');"></div>
                                 <div class="slider-content">
-                                    <h3>Scalable, Modular, Consistent</h3>
+                                    <h1>Mahathep Auto</h1>
                                     <p>
-                                        Easily exclude the components you don't require. Lightweight, consistent
-                                        Bootstrap based styles across all elements and components
+                                       Check Sit Auto
                                     </p>
                                 </div>
                             </div>
@@ -35,8 +33,8 @@
                             <div class="position-relative h-100 d-flex justify-content-center align-items-center bg-sunny-morning" tabindex="-1">
                                 <div class="slide-img-bg" style="background-image: url('images/originals/citydark.jpg');"></div>
                                 <div class="slider-content">
-                                    <h3>Complex, but lightweight</h3>
-                                    <p>We've included a lot of components that cover almost all use cases for any type of application.</p>
+                                    <h1>Mahathep Auto</h1>
+                                    <p>We are Mahathep</p>
                                 </div>
                             </div>
                         </div>
@@ -51,8 +49,11 @@
 
                     </div>
                     <h4 class="mb-0">
-                        <span class="d-block">Welcome Account-Mahathep,</span>
-                        <span>Please sign in to your account.</span>
+                        <span class="d-block">
+                            {{-- <h1>Welcome</h1><h1>Mahathep</h1><h1>-</h1><h1>Auto</h1> --}}
+                            <h1> Welcome Mahathep-Auto </h1>
+                        </span>
+                        {{-- <span>Please sign in to your account.</span> --}}
                     </h4>
                     <h6 class="mt-3">No account?
                         <a href="{{ route('register') }}" class="text-primary">Sign up now</a>
@@ -169,12 +170,15 @@
                         <div class="divider row"></div>
                         <div class="d-flex align-items-center">
                             <div class="ms-auto"> 
-                                <button class="mb-2 me-2 btn-icon btn-shadow btn-dashed btn btn-outline-info">
+                                {{-- <button class="me-2 btn-icon btn-shadow btn-dashed btn btn-outline-info">
                                     <i class="pe-7s-refresh btn-icon-wrapper"></i>Recover Password
-                                </button>
-                                <button type="submit" class="mb-2 me-2 btn-icon btn-shadow btn-dashed btn btn-outline-success">
+                                </button> --}}
+                                <button type="submit" class="me-2 btn-icon btn-shadow btn-dashed btn btn-outline-success">
                                     <i class="pe-7s-shuffle btn-icon-wrapper"></i>Login
                                 </button>
+                                <a href="{{url('datahosauto')}}" class="me-2 btn-icon btn-shadow btn-dashed btn btn-outline-primary">
+                                    <i class="pe-7s-shuffle btn-icon-wrapper"></i>Auto System
+                                </a>
                             </div>
                         </div>
 

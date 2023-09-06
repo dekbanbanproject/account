@@ -28,6 +28,11 @@ Route::get('/', function () {
   })->name('index');
 // })->name('wel.index');
 
+Route::match(['get','post'],'datahosauto',[App\Http\Controllers\AutorpstController::class, 'datahosauto'])->name('hos.datahosauto');//  
+Route::match(['get','post'],'pullhosauto',[App\Http\Controllers\AutorpstController::class, 'pullhosauto'])->name('hos.pullhosauto');// 
+Route::match(['get','post'],'checksitauto',[App\Http\Controllers\AutorpstController::class, 'checksitauto'])->name('hos.checksitauto');// 
+Route::match(['get','post'],'check_sit_token',[App\Http\Controllers\AutorpstController::class, 'check_sit_token'])->name('hos.check_sit_token');// 
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('type');

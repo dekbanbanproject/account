@@ -1,5 +1,5 @@
 @extends('layouts.manage') 
-@section('title', 'DTAD-ACCOUNT || DASHBOARD')
+@section('title', 'Mahathep || Auto')
    
 @section('content')
 <script>
@@ -74,7 +74,7 @@ $yb =  date('Y')+542;
                     </div>
                 </div>
             </div>
-            <div class="row mt-2">
+            {{-- <div class="row mt-2">
              
                     <div class="col-xl-3 col-md-3">
                         <div class="main-card mb-3 card">
@@ -200,7 +200,7 @@ $yb =  date('Y')+542;
                         </div> 
                     </div>                     
                               
-            </div>
+            </div> --}}
 
            
        
